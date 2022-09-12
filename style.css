@@ -1,0 +1,144 @@
+#canvas1 {
+  border: 5px solid black;
+  display: flex;
+  margin: auto;
+}
+
+body {
+  background-color: darkslategray;
+  height: 100vh;
+}
+
+#startScreen {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+#startButtonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  margin-bottom: 20px;
+}
+
+#startButton {
+  border: darkkhaki solid 4px;
+  background-color: darkgoldenrod;
+  padding: 12px 48px 12px 48px;
+  font-family: "DotGothic16", sans-serif;
+  color: black;
+  cursor: crosshair;
+  font-size: 20px;
+  margin-top: auto;
+  margin-bottom: 30px;
+}
+
+#descriptionBox {
+  margin: auto;
+  padding-bottom: 20px;
+  display: flex;
+  background-color: transparent;
+  width: 30%;
+  top: 60%;
+  justify-content: center;
+}
+
+#descriptionBox2 {
+  margin: auto;
+  font-family: "DotGothic16", sans-serif;
+  margin: auto;
+  max-width: 50%;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+#about {
+  display: flex;
+  margin: auto;
+  border: darkkhaki solid 4px;
+  background-color: darkgoldenrod;
+  color: black;
+  top: 20%;
+  font-family: "DotGothic16", sans-serif;
+  cursor: crosshair;
+}
+
+#instructions {
+  display: flex;
+  margin: auto;
+  border: darkkhaki solid 4px;
+  background-color: darkgoldenrod;
+  color: black;
+  top: 20%;
+  font-family: "DotGothic16", sans-serif;
+  cursor: crosshair;
+}
+
+#startButton {
+  transition-duration: 0.4s;
+}
+
+#startButton:hover {
+  background-color: black;
+  color: white;
+}
+
+#about {
+  transition-duration: 0.4s;
+}
+
+#about:hover {
+  background-color: black;
+  color: white;
+}
+
+#instructions {
+  transition-duration: 0.4s;
+}
+
+#instructions:hover {
+  background-color: black;
+  color: white;
+}
+
+#playerInfo {
+  display: flex;
+}
+
+#buttonBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+
+#award {
+  display: flex;
+  position: relative;
+  color: white;
+  background-color: black;
+  opacity: 50%;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.buttons {
+  margin: 20px;
+  /* background-color: grey; */
+}
