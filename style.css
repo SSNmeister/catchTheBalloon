@@ -115,15 +115,6 @@ body {
   display: flex;
 }
 
-#buttonBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  opacity: 0.5;
-  margin-bottom: 10px;
-}
-
 #award {
   display: flex;
   position: relative;
@@ -136,11 +127,6 @@ body {
   padding-top: 10px;
   font-size: 12px;
   margin-top: 10px;
-}
-
-.buttons {
-  margin: 20px;
-  /* background-color: grey; */
 }
 
 #gameNotification {
@@ -163,4 +149,23 @@ body {
   padding-bottom: 1%;
   max-width: 50%;
   font-size: 20px;
+}
+
+#buttonBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+
+  margin-bottom: 10px;
+}
+
+.buttons {
+  margin: 20px;
+  border: black solid 2.5px;
+  background-color: darkgoldenrod;
+  color: black;
+  top: 20%;
+  font-family: "DotGothic16", sans-serif;
+  cursor: crosshair;
 }

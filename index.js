@@ -10,6 +10,7 @@ canvas.height = 576;
 
 let gravity = 0.5; //creating gravity acceleration
 let itemCollection = false;
+
 let gameModeEasy = true;
 let gameModeMedium = false;
 let gameModeHard = false;
@@ -130,8 +131,8 @@ class ItemObjects {
       y: y,
     };
     this.image = image;
-    this.width = image.width;
-    this.height = image.height;
+    this.width = image.width * 0.5;
+    this.height = image.height * 0.5;
   }
 
   draw() {
@@ -146,7 +147,7 @@ class ItemObjects {
 }
 
 //===============================================================
-//======================== ENEMY CLASS =========================
+//======================== ENEMY CLASS ==========================
 //===============================================================
 class EnemyObjects {
   constructor({ x, y, image }) {
@@ -154,9 +155,15 @@ class EnemyObjects {
       x: x,
       y: y,
     };
+    this.velocity = {
+      x: 0,
+      y: 0,
+    };
+
     this.image = image;
-    this.width = image.width;
-    this.height = image.height;
+    this.width = image.width * 0.5;
+    this.height = image.height * 0.5;
+    this.movement = false;
   }
 
   draw() {
@@ -167,6 +174,42 @@ class EnemyObjects {
       this.width,
       this.height
     );
+  }
+}
+
+//===============================================================
+//===================== ENEMY FLYING CLASS ======================
+//===============================================================
+class EnemyFlyingObjects {
+  constructor({ x, y, image }) {
+    this.position = {
+      x: x,
+      y: y,
+    };
+    this.velocity = {
+      x: 0,
+      y: 0,
+    };
+
+    this.image = image;
+    this.width = image.width * 0.5;
+    this.height = image.height * 0.5;
+    this.movement = false;
+  }
+
+  draw() {
+    c.drawImage(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
+
+  update() {
+    this.draw();
+    this.position.y += this.velocity.y;
   }
 }
 
@@ -287,13 +330,21 @@ let decorativeObjects = [
 //================= Implement the ITEM class ====================
 //===============================================================
 
-let item = [new ItemObjects({ x: 4600, y: 429.5, image: itemImage })];
+let item = [new ItemObjects({ x: 4625, y: 500, image: itemImage })];
 
 //===============================================================
 //================= Implement the ENEMY class ===================
 //===============================================================
 
-let enemy = [new EnemyObjects({ x: 300, y: 500, image: enemyImage })];
+let enemy = [new EnemyObjects({ x: -3000, y: 370, image: enemyImage })];
+
+//===============================================================
+//================= Implement the ENEMY class ===================
+//===============================================================
+
+let enemyFlying = [
+  new EnemyFlyingObjects({ x: -3000, y: 370, image: enemyImage }),
+];
 
 //===============================================================
 //================ Implement the Winning class ==================
@@ -301,7 +352,7 @@ let enemy = [new EnemyObjects({ x: 300, y: 500, image: enemyImage })];
 
 let winningItem = [
   new WinningObject({
-    x: 12000,
+    x: 12400,
     y: 415,
     image: winningImage,
   }),
@@ -342,9 +393,9 @@ function restartGame() {
     new Platform({ x: 2800, y: 300, image: platformImage2 }),
     new Platform({ x: 3200, y: 350, image: platformImage2 }),
     new Platform({ x: 3600, y: 450, image: platformImage2 }),
-    new Platform({ x: 3800, y: 300, image: platformImage3 }),
-    new Platform({ x: 4000, y: 150, image: platformImage3 }),
-    new Platform({ x: 4300, y: 150, image: platformImage3 }),
+    new Platform({ x: 3800, y: 300, image: platformImage3 }), //balloons
+    new Platform({ x: 4000, y: 150, image: platformImage3 }), //balloons
+    new Platform({ x: 4300, y: 150, image: platformImage3 }), //balloons
     new Platform({ x: 4500, y: 300, image: platformImage }),
     new Platform({ x: 5200, y: 550, image: platformImage2 }),
     new Platform({ x: 4800, y: 550, image: platformImage2 }), //easter
@@ -407,6 +458,7 @@ function restartGame() {
 //===============================================================
 // ======================== ANIMATION  ==========================
 //===============================================================
+
 function animate() {
   toggleScreen("startScreen", false);
   toggleScreen("canvas", true);
@@ -417,6 +469,20 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height); //function to clear your canvas
   //updating/call the platform's draw function (style and fill)
 
+  // ================== FLYING ENEMY MOVEMENT ===================
+  enemyFlying.forEach((movingEnemy) => {
+    if (movingEnemy.movement === false && movingEnemy.position.y > 0) {
+      movingEnemy.velocity.y = 4;
+      movingEnemy.movement = true;
+    } else if (movingEnemy.movement === true && movingEnemy.position.y >= 510) {
+      movingEnemy.velocity.y = -4;
+    } else if (movingEnemy.position.y <= 0) {
+      movingEnemy.velocity.y = 4;
+      movingEnemy.movement = false;
+    }
+  });
+
+  //=================== DRAWING OBJECTS  ====================
   decorativeObjects.forEach((decorativeObjects) => {
     decorativeObjects.draw();
   });
@@ -434,9 +500,11 @@ function animate() {
   });
 
   enemy.forEach((item) => {
-    if (gameModeMedium === true) {
-      item.draw();
-    }
+    item.draw();
+  });
+
+  enemyFlying.forEach((item) => {
+    item.update();
   });
 
   player.update(); //updating/call the draw function and player new position
@@ -465,6 +533,12 @@ function animate() {
       winningItem.forEach((itemObject) => {
         itemObject.position.x -= player.speed;
       });
+      enemy.forEach((enemyObject) => {
+        enemyObject.position.x -= player.speed;
+      });
+      enemyFlying.forEach((flyingObject) => {
+        flyingObject.position.x -= player.speed;
+      });
 
       scrollOffset += player.speed;
     } else if (keys.left.pressed && scrollOffset > 0) {
@@ -476,6 +550,12 @@ function animate() {
       });
       item.forEach((itemObject) => {
         itemObject.position.x += player.speed;
+      });
+      enemy.forEach((enemyObject) => {
+        enemyObject.position.x += player.speed;
+      });
+      enemyFlying.forEach((flyingObject) => {
+        flyingObject.position.x += player.speed;
       });
 
       winningItem.forEach((itemObject) => {
@@ -523,6 +603,53 @@ function animate() {
     }
   });
 
+  //=============== ENEMY COLLECTION DETECTION ================
+  enemy.forEach((enemyObject) => {
+    if (
+      player.position.x + player.width >= enemyObject.position.x &&
+      player.position.x <= enemyObject.position.x + enemyObject.width &&
+      player.position.y + player.height >= enemyObject.position.y &&
+      player.position.y <= enemyObject.position.y + enemyObject.height &&
+      gameModeMedium === true
+    ) {
+      notification.innerHTML = "You Died!";
+      document.querySelector("#notification").style.backgroundColor = "red";
+      restartGameMedium();
+    } else if (
+      player.position.x + player.width >= enemyObject.position.x &&
+      player.position.x <= enemyObject.position.x + enemyObject.width &&
+      player.position.y + player.height >= enemyObject.position.y &&
+      player.position.y <= enemyObject.position.y + enemyObject.height &&
+      gameModeHard === true
+    ) {
+      notification.innerHTML = "You Died!";
+      document.querySelector("#notification").style.backgroundColor = "red";
+      restartGameHard();
+    }
+  });
+
+  //================= FLYING ENEMY  DETECTION ==================
+
+  enemyFlying.forEach((enemyObject) => {
+    if (
+      player.position.x + player.width >= enemyObject.position.x &&
+      player.position.x <= enemyObject.position.x + enemyObject.width &&
+      player.position.y + player.height >= enemyObject.position.y &&
+      player.position.y <= enemyObject.position.y + enemyObject.height &&
+      gameModeHard === true
+    ) {
+      notification.innerHTML = "You Died!";
+      document.querySelector("#notification").style.backgroundColor = "red";
+      restartGameHard();
+    }
+  });
+
+  if (scrollOffset >= 1 && scrollOffset <= 100) {
+    notification.innerHTML =
+      "Hello there, let's help Damien get to the Bang Balloon!";
+    notification.style.backgroundColor = "#f8f0e3";
+  }
+
   //=================== ITEM PROMPT DETECTION =====================
   if (
     scrollOffset >= 5500 &&
@@ -530,25 +657,55 @@ function animate() {
     itemCollection === false
   ) {
     notification.innerHTML = "You need something to help you jump higher.";
-    document.querySelector("#notification").style.backgroundColor = "red";
+    document.querySelector("#notification").style.backgroundColor = "green";
   }
   // console.log(itemCollection);
 
   //===============================================================
   // ======================= WIN SCENARIO  ========================
   //===============================================================
-  if (scrollOffset > 12000) {
+  if (scrollOffset > 12000 && gameModeEasy === true) {
     window.confirm("You successfully took the balloon!");
-    restartGame();
+    restartGameMedium();
     scrollOffset = 0;
     // console.log("You win.");
+  } else if (scrollOffset > 12000 && gameModeMedium === true) {
+    window.confirm("You successfully took the balloon!");
+    restartGameHard();
+    scrollOffset = 0;
+  } else if (scrollOffset > 12000 && gameModeHard === true) {
+    window.confirm("You successfully took the balloon!");
+    restartGameHard();
+    scrollOffset = 0;
   }
 
   //===============================================================
   // ======================= LOSE SCENARIO  =======================
   //===============================================================
-  if (player.position.y + player.height * 0.3 > canvas.height) {
+  // if (player.position.y + player.height * 0.3 > canvas.height) {
+  //   restartGame();
+  // }
+  if (
+    player.position.y + player.height * 0.3 > canvas.height &&
+    gameModeEasy === true
+  ) {
+    notification.innerHTML = "You Died!";
+    document.querySelector("#notification").style.backgroundColor = "red";
     restartGame();
+  } else if (
+    player.position.y + player.height * 0.3 > canvas.height &&
+    gameModeMedium === true
+  ) {
+    notification.innerHTML = "You Died!";
+    document.querySelector("#notification").style.backgroundColor = "red";
+    restartGameMedium();
+  } else if (
+    player.position.y + player.height * 0.3 > canvas.height &&
+    gameModeHard === true
+  ) {
+    notification.innerHTML = "You Died!";
+    document.querySelector("#notification").style.backgroundColor = "red";
+    restartGameHard();
   }
 }
 

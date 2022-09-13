@@ -18,26 +18,6 @@ instructions.addEventListener("click", () => {
     "Help Damien get to the Bang Balloon. <br><br> Legend has it, there are multiple obstacles along the way, avoid them at all cost. <br><br> Use W, A, S, D to control the movement of Damien. <br><br> Good Luck.";
 });
 
-function easyMode() {
-  gameModeEasy = true;
-  gameModeMedium = false;
-  gameModeHard = false;
-  restartGame();
-}
-
-function mediumMode() {
-  gameModeEasy = false;
-  gameModeMedium = true;
-  gameModeHard = false;
-  restartGame();
-}
-
-function hardMode() {
-  gameModeEasy = false;
-  gameModeMedium = false;
-  gameModeHard = true;
-  restartGame();
-}
-easyButton.addEventListener("click", easyMode);
-mediumButton.addEventListener("click", mediumMode);
-hardButton.addEventListener("click", hardMode);
+easyButton.addEventListener("click", restartGame);
+mediumButton.addEventListener("click", restartGameMedium);
+hardButton.addEventListener("click", restartGameHard);
