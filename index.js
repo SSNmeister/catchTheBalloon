@@ -9,6 +9,10 @@ canvas.width = 1024;
 canvas.height = 576;
 
 let gravity = 0.5; //creating gravity acceleration
+let itemCollection = false;
+let gameModeEasy = true;
+let gameModeMedium = false;
+let gameModeHard = false;
 
 //===============================================================
 //========================PLAYER CREATION========================
@@ -142,6 +146,31 @@ class ItemObjects {
 }
 
 //===============================================================
+//======================== ENEMY CLASS =========================
+//===============================================================
+class EnemyObjects {
+  constructor({ x, y, image }) {
+    this.position = {
+      x: x,
+      y: y,
+    };
+    this.image = image;
+    this.width = image.width;
+    this.height = image.height;
+  }
+
+  draw() {
+    c.drawImage(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
+}
+
+//===============================================================
 //======================= WINNING CLASS =========================
 //===============================================================
 class WinningObject {
@@ -183,6 +212,7 @@ const platformImage3 = createImage("./img/platform_3.png");
 const backgroundImage = createImage("./img/background_2.png");
 let itemImage = createImage("./img/potion.png");
 const winningImage = createImage("./img/potion.png");
+const enemyImage = createImage("./img/potion.png");
 
 //===============================================================
 //================Implement the Player class ====================
@@ -260,12 +290,18 @@ let decorativeObjects = [
 let item = [new ItemObjects({ x: 4600, y: 429.5, image: itemImage })];
 
 //===============================================================
+//================= Implement the ENEMY class ===================
+//===============================================================
+
+let enemy = [new EnemyObjects({ x: 300, y: 500, image: enemyImage })];
+
+//===============================================================
 //================ Implement the Winning class ==================
 //===============================================================
 
 let winningItem = [
   new WinningObject({
-    x: 10250 + platformImage.width + platformImage.width,
+    x: 12000,
     y: 415,
     image: winningImage,
   }),
@@ -302,17 +338,70 @@ function restartGame() {
       y: 560,
       image: platformImage,
     }),
-  ]; //creation of an array of platforms
+    new Platform({ x: 2000, y: 420, image: platformImage }),
+    new Platform({ x: 2800, y: 300, image: platformImage2 }),
+    new Platform({ x: 3200, y: 350, image: platformImage2 }),
+    new Platform({ x: 3600, y: 450, image: platformImage2 }),
+    new Platform({ x: 3800, y: 300, image: platformImage3 }),
+    new Platform({ x: 4000, y: 150, image: platformImage3 }),
+    new Platform({ x: 4300, y: 150, image: platformImage3 }),
+    new Platform({ x: 4500, y: 300, image: platformImage }),
+    new Platform({ x: 5200, y: 550, image: platformImage2 }),
+    new Platform({ x: 4800, y: 550, image: platformImage2 }), //easter
+    new Platform({ x: 4600, y: 550, image: platformImage2 }), //easter
+    new Platform({ x: 5500, y: 450, image: platformImage }),
+    new Platform({ x: 6200, y: 550, image: platformImage2 }),
+    new Platform({ x: 6300, y: 200, image: platformImage2 }),
+    new Platform({ x: 6900, y: 200, image: platformImage2 }),
+    new Platform({ x: 7500, y: 200, image: platformImage2 }),
+    new Platform({ x: 8100, y: 450, image: platformImage }),
+    new Platform({ x: 8900, y: 520, image: platformImage }),
+    new Platform({ x: 9700, y: 550, image: platformImage2 }),
+    new Platform({ x: 9900, y: 410, image: platformImage2 }),
+    new Platform({ x: 9700, y: 260, image: platformImage2 }),
+    new Platform({ x: 9900, y: 110, image: platformImage2 }),
+    new Platform({ x: 10400, y: 520, image: platformImage }),
+    new Platform({
+      x: 10350 + platformImage.width,
+      y: 520,
+      image: platformImage,
+    }),
+    new Platform({
+      x: 10350 + platformImage.width + platformImage.width,
+      y: 520,
+      image: platformImage,
+    }),
+    new Platform({
+      x:
+        10350 + platformImage.width + platformImage.width + platformImage.width,
+      y: 520,
+      image: platformImage,
+    }),
+  ];
 
   decorativeObjects = [
     new DecorativeObjects({
-      x: -1, //left most part of screen
-      y: -1, //top most part of screen
+      x: -150,
+      y: -1,
       image: backgroundImage,
     }),
   ];
 
+  item = [new ItemObjects({ x: 4600, y: 429.5, image: itemImage })];
+
+  winningItem = [
+    new WinningObject({
+      x: 16000,
+      y: 415,
+      image: winningImage,
+    }),
+  ];
+
   scrollOffset = 0;
+  player.position.x = 100;
+  keys.right.pressed = false;
+  // keys.up.pressed = false;
+  keys.left.pressed = false;
 }
 
 //===============================================================
@@ -342,6 +431,12 @@ function animate() {
 
   winningItem.forEach((item) => {
     item.draw();
+  });
+
+  enemy.forEach((item) => {
+    if (gameModeMedium === true) {
+      item.draw();
+    }
   });
 
   player.update(); //updating/call the draw function and player new position
@@ -390,6 +485,7 @@ function animate() {
     }
   }
   console.log(scrollOffset);
+  console.log(gameModeMedium);
   // console.log(player.position.y);
   // console.log(item[0].position.y);
 
@@ -407,19 +503,18 @@ function animate() {
   });
 
   //=============== ITEM COLLECTION DETECTION ================
+
   item.forEach((item) => {
     if (
       player.position.x + player.width >= item.position.x &&
       player.position.x <= item.position.x + item.width &&
       player.position.y + player.height >= item.position.y &&
       player.position.y <= item.position.y + item.height
-      // player.position.x + player.width <= item.position.x + item.width &&
-      // player.position.x >= item.position.x &&
-      // player.position.y === item.position.y
-      // player.position.y + player.height >= item.position.y + item.height
     ) {
       gravity = 0.25;
-      notification.innerHTML = "You can jump higher.";
+      itemCollection = true;
+      notification.innerHTML = "You can jump higher!";
+      document.querySelector("#notification").style.backgroundColor = "#f8f0e3";
     } else if (
       player.position.x + player.width >=
       item.position.x + item.width + 3500
@@ -428,12 +523,24 @@ function animate() {
     }
   });
 
+  //=================== ITEM PROMPT DETECTION =====================
+  if (
+    scrollOffset >= 5500 &&
+    scrollOffset <= 5650 &&
+    itemCollection === false
+  ) {
+    notification.innerHTML = "You need something to help you jump higher.";
+    document.querySelector("#notification").style.backgroundColor = "red";
+  }
+  // console.log(itemCollection);
+
   //===============================================================
   // ======================= WIN SCENARIO  ========================
   //===============================================================
-  if (scrollOffset > 11700) {
+  if (scrollOffset > 12000) {
     window.confirm("You successfully took the balloon!");
     restartGame();
+    scrollOffset = 0;
     // console.log("You win.");
   }
 
