@@ -378,6 +378,13 @@ let scrollOffset = 0;
 //===============================================================
 
 function restartGame() {
+  document.querySelector("#easyButton").innerHTML = "Noob!";
+  document.querySelector("#easyButton").style.backgroundColor = "white";
+  mediumButton.innerHTML = "Medium";
+  mediumButton.style.backgroundColor = "darkgoldenrod";
+  hardButton.innerHTML = "Hard";
+  hardButton.style.backgroundColor = "darkgoldenrod";
+
   gravity = 0.5;
   player = new Player();
 

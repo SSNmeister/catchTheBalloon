@@ -3,6 +3,10 @@
 //===============================================================
 
 function restartGameMedium() {
+  easyButton.innerHTML = "Easy";
+  easyButton.style.backgroundColor = "darkgoldenrod";
+  mediumButton.innerHTML = "Oooh~";
+  mediumButton.style.backgroundColor = "white";
   gameModeEasy = false;
   gameModeMedium = true;
 

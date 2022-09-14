@@ -4,9 +4,43 @@
   margin: auto;
 }
 
+#menu {
+  height: 60px;
+  background-color: #252321;
+  border-bottom: 2px outset white;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.menuButtons {
+  border: black solid 2.5px;
+  background-color: darkgoldenrod;
+  color: black;
+  font-family: "DotGothic16", sans-serif;
+  cursor: crosshair;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  transition-duration: 0.4s;
+}
+
+.menuButtons:hover {
+  background-color: black;
+  color: white;
+}
+
 body {
   background-color: darkslategray;
   height: 100vh;
+}
+
+#characterSelection {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-80%, -90%);
 }
 
 #startScreen {
@@ -115,7 +149,7 @@ body {
   display: flex;
 }
 
-#award {
+#bottomInfo {
   display: flex;
   position: relative;
   color: white;
@@ -130,8 +164,8 @@ body {
 }
 
 #gameNotification {
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #notification {
@@ -156,16 +190,22 @@ body {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-
-  margin-bottom: 10px;
 }
 
 .buttons {
-  margin: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
   border: black solid 2.5px;
   background-color: darkgoldenrod;
   color: black;
-  top: 20%;
   font-family: "DotGothic16", sans-serif;
   cursor: crosshair;
+  transition-duration: 0.4s;
+}
+
+.buttons:hover {
+  background-color: black;
+  color: goldenrod;
 }

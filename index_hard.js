@@ -3,6 +3,13 @@
 //===============================================================
 
 function restartGameHard() {
+  easyButton.innerHTML = "Easy";
+  easyButton.style.backgroundColor = "darkgoldenrod";
+  mediumButton.innerHTML = "Medium";
+  mediumButton.style.backgroundColor = "darkgoldenrod";
+  hardButton.innerHTML = "Naise!";
+  hardButton.style.backgroundColor = "white";
+
   gameModeEasy = false;
   gameModeMedium = false;
   gameModeHard = true;

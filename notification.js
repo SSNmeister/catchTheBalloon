@@ -18,6 +18,14 @@ instructions.addEventListener("click", () => {
     "Help Damien get to the Bang Balloon. <br><br> Legend has it, there are multiple obstacles along the way, avoid them at all cost. <br><br> Use W, A, S, D to control the movement of Damien. <br><br> Good Luck.";
 });
 
+//================== Event listener for MENU ===================
+const menuButton = document.querySelector("#menuBtn");
+function reloadPage() {
+  location.reload();
+}
+menuButton.addEventListener("click", reloadPage);
+
+//=============== Event listener for GAME MODES ================
 easyButton.addEventListener("click", restartGame);
 mediumButton.addEventListener("click", restartGameMedium);
 hardButton.addEventListener("click", restartGameHard);
