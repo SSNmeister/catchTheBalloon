@@ -29,3 +29,37 @@ menuButton.addEventListener("click", reloadPage);
 easyButton.addEventListener("click", restartGame);
 mediumButton.addEventListener("click", restartGameMedium);
 hardButton.addEventListener("click", restartGameHard);
+
+//=============== Event listener for GAME MODES ================
+easyButton.addEventListener("click", restartGame);
+mediumButton.addEventListener("click", restartGameMedium);
+hardButton.addEventListener("click", restartGameHard);
+
+//===============================================================
+//====================== OVERLAY button =========================
+//===============================================================
+const openCharacterButton = document.querySelector("#characterBtn");
+const closeCharacterButton = document.querySelector("#closeButton");
+const overlay = document.querySelector("#overlay");
+
+openCharacterButton.addEventListener("click", () => {
+  const modal = document.querySelector("#characterSelection");
+  openModal(modal);
+});
+
+closeCharacterButton.addEventListener("click", () => {
+  const modal = document.querySelector("#characterSelection");
+  closeModal(modal);
+});
+
+function openModal(modal) {
+  if (modal == null) return;
+  modal.classList.add("active");
+  overlay.classList.add("active");
+}
+
+function closeModal(modal) {
+  if (modal == null) return;
+  modal.classList.remove("active");
+  overlay.classList.remove("active");
+}

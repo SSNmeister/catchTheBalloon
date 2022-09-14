@@ -15,6 +15,10 @@ let gameModeEasy = true;
 let gameModeMedium = false;
 let gameModeHard = false;
 
+let playerImage1 = true;
+let playerImage2 = false;
+let playerChoice = ["./img/hero_1.png", "./img/potion.png"];
+
 //===============================================================
 //========================PLAYER CREATION========================
 //===============================================================
@@ -33,7 +37,11 @@ class Player {
       x: 0,
       y: 0,
     };
-    this.image = createImage("./img/hero_1.png");
+    if (playerImage1 === true) {
+      this.image = createImage("./img/hero_1.png");
+    } else if (playerImage2 === true) {
+      this.image = createImage("./img/potion.png");
+    }
     this.frames = 0;
   }
 
@@ -57,10 +65,10 @@ class Player {
   }
 
   update() {
-    this.frames++;
-    if (this.frames > 19) {
-      this.frames = 0;
-    }
+    // this.frames++;
+    // if (this.frames > 19) {
+    //   this.frames = 0;
+    // }
     //updating player's y position with gravity on the canvas
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
@@ -260,8 +268,43 @@ const enemyImage = createImage("./img/potion.png");
 //===============================================================
 //================Implement the Player class ====================
 //===============================================================
-
 let player = new Player();
+//==================== PLAYER IMAGE Creation ====================
+const character1 = document.querySelector("#character1Button");
+const character2 = document.querySelector("#character2Button");
+// character1.addEventListener("click", () => {
+//   player.forEach((player) => {
+//     player.image = createImage("./img/potion.png");
+//   });
+// });
+character1.addEventListener("click", () => {
+  playerImage1 = true;
+  playerImage2 = false;
+  closeModal(characterSelection);
+  if (gameModeEasy === true) {
+    restartGame();
+  } else if (gameModeMedium === true) {
+    restartGameMedium();
+  } else if (gameModeHard === true) {
+    restartGameHard();
+  }
+});
+
+character2.addEventListener("click", () => {
+  playerImage1 = false;
+  playerImage2 = true;
+  closeModal(characterSelection);
+  console.log(playerImage2);
+  if (gameModeEasy === true) {
+    restartGame();
+  } else if (gameModeMedium === true) {
+    restartGameMedium();
+  } else if (gameModeHard === true) {
+    restartGameHard();
+  }
+});
+console.log(playerImage2);
+
 //===============================================================
 //=============== Implement the Platform class ==================
 //===============================================================
@@ -339,7 +382,7 @@ let item = [new ItemObjects({ x: 4625, y: 500, image: itemImage })];
 let enemy = [new EnemyObjects({ x: -3000, y: 370, image: enemyImage })];
 
 //===============================================================
-//================= Implement the ENEMY class ===================
+//============== Implement the FLYING ENEMY class ===============
 //===============================================================
 
 let enemyFlying = [
@@ -378,8 +421,8 @@ let scrollOffset = 0;
 //===============================================================
 
 function restartGame() {
-  document.querySelector("#easyButton").innerHTML = "Noob!";
-  document.querySelector("#easyButton").style.backgroundColor = "white";
+  document.querySelector("#easyButton").innerHTML = "Easy";
+  document.querySelector("#easyButton").style.backgroundColor = "darkgoldenrod";
   mediumButton.innerHTML = "Medium";
   mediumButton.style.backgroundColor = "darkgoldenrod";
   hardButton.innerHTML = "Hard";
@@ -571,10 +614,8 @@ function animate() {
       scrollOffset -= player.speed;
     }
   }
-  console.log(scrollOffset);
-  console.log(gameModeMedium);
-  // console.log(player.position.y);
-  // console.log(item[0].position.y);
+  // console.log(scrollOffset);
+  // console.log(gameModeMedium);
 
   //=============== PLATFORM COLLISION DETECTION ================
   platforms.forEach((platform) => {
