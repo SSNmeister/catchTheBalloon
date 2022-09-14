@@ -17,7 +17,7 @@ let gameModeHard = false;
 
 let playerImage1 = true;
 let playerImage2 = false;
-let playerChoice = ["./img/hero_1.png", "./img/potion.png"];
+let playerImage3 = false;
 
 //===============================================================
 //========================PLAYER CREATION========================
@@ -33,14 +33,17 @@ class Player {
     };
     this.width = 66;
     this.height = 120;
+
     this.velocity = {
       x: 0,
       y: 0,
     };
     if (playerImage1 === true) {
-      this.image = createImage("./img/hero_1.png");
+      this.image = createImage("./img/character1.png");
     } else if (playerImage2 === true) {
-      this.image = createImage("./img/potion.png");
+      this.image = createImage("./img/character2.png");
+    } else if (playerImage3 === true) {
+      this.image = createImage("./img/character3.png");
     }
     this.frames = 0;
   }
@@ -200,8 +203,8 @@ class EnemyFlyingObjects {
     };
 
     this.image = image;
-    this.width = image.width * 0.5;
-    this.height = image.height * 0.5;
+    this.width = image.width * 0.8;
+    this.height = image.height * 0.8;
     this.movement = false;
   }
 
@@ -263,7 +266,7 @@ const platformImage3 = createImage("./img/platform_3.png");
 const backgroundImage = createImage("./img/background_2.png");
 let itemImage = createImage("./img/potion.png");
 const winningImage = createImage("./img/potion.png");
-const enemyImage = createImage("./img/potion.png");
+const enemyImage = createImage("./img/mines.png");
 
 //===============================================================
 //================Implement the Player class ====================
@@ -272,14 +275,12 @@ let player = new Player();
 //==================== PLAYER IMAGE Creation ====================
 const character1 = document.querySelector("#character1Button");
 const character2 = document.querySelector("#character2Button");
-// character1.addEventListener("click", () => {
-//   player.forEach((player) => {
-//     player.image = createImage("./img/potion.png");
-//   });
-// });
+const character3 = document.querySelector("#character3Button");
+
 character1.addEventListener("click", () => {
   playerImage1 = true;
   playerImage2 = false;
+  playerImage3 = false;
   closeModal(characterSelection);
   if (gameModeEasy === true) {
     restartGame();
@@ -293,6 +294,23 @@ character1.addEventListener("click", () => {
 character2.addEventListener("click", () => {
   playerImage1 = false;
   playerImage2 = true;
+  playerImage3 = false;
+  closeModal(characterSelection);
+  console.log(playerImage2);
+  if (gameModeEasy === true) {
+    restartGame();
+  } else if (gameModeMedium === true) {
+    restartGameMedium();
+  } else if (gameModeHard === true) {
+    restartGameHard();
+  }
+});
+console.log(playerImage2);
+
+character3.addEventListener("click", () => {
+  playerImage1 = false;
+  playerImage2 = false;
+  playerImage3 = true;
   closeModal(characterSelection);
   console.log(playerImage2);
   if (gameModeEasy === true) {
