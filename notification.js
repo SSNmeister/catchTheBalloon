@@ -16,6 +16,7 @@ aboutGame.addEventListener("click", () => {
 instructions.addEventListener("click", () => {
   document.querySelector("#descriptionBox2").innerHTML =
     "Help Damien get to the Bang Balloon. <br><br> Legend has it, there are multiple obstacles along the way, avoid them at all cost. <br><br> Use W, A, S, D to control the movement of Damien. <br><br> Good Luck.";
+  document.querySelector("#descriptionBox2").style.textAlign = "left";
 });
 
 //================== Event listener for MENU ===================

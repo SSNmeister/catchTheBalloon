@@ -9,9 +9,11 @@ function restartGameMedium() {
   mediumButton.style.backgroundColor = "white";
   gameModeEasy = false;
   gameModeMedium = true;
+  gameModeHard = false;
 
   gravity = 0.5;
   player = new Player();
+  itemCollection = false;
 
   platforms = [
     new Platform({ x: -50, y: 560, image: platformImage }),

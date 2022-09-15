@@ -449,6 +449,8 @@ function restartGame() {
   gravity = 0.5;
   player = new Player();
 
+  itemCollection = false;
+
   platforms = [
     new Platform({ x: -50, y: 560, image: platformImage }),
     new Platform({ x: platformImage.width - 60, y: 560, image: platformImage }),
@@ -506,7 +508,7 @@ function restartGame() {
     }),
   ];
 
-  item = [new ItemObjects({ x: 4600, y: 429.5, image: itemImage })];
+  item = [new ItemObjects({ x: 4600, y: 500, image: itemImage })];
 
   winningItem = [
     new WinningObject({
@@ -632,6 +634,7 @@ function animate() {
       scrollOffset -= player.speed;
     }
   }
+  console.log(item[0].position.y);
   // console.log(scrollOffset);
   // console.log(gameModeMedium);
 
@@ -723,7 +726,8 @@ function animate() {
     itemCollection === false
   ) {
     notification.innerHTML = "You need something to help you jump higher.";
-    document.querySelector("#notification").style.backgroundColor = "green";
+    document.querySelector("#notification").style.backgroundColor =
+      "darkgoldenrod";
   }
   // console.log(itemCollection);
 
