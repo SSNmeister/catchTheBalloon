@@ -1,20 +1,19 @@
 # Catch The Balloon
 Play the game and catch the Balloon!
-# Table of Contents
 
-1. [ Overview ](#overview)
-2. [ Canvas ](#canvas)
-3. [ Classes ](#classescreation)
-
-
-<a name="overview"></a>
 ## 1. Overview
 This project is a 2D side scrolling game where a player must get to the finishing line, while avoiding obstacles along the way, to complete the game. The player will be able to test their skills by selecting the different difficulty modes the game offers.
 <br> <br> Damien a devoted Kung Fu master is tired of Man-kind and the damages man have done to Mother Earth. <br> After years of farming and mining BTC, Damien has saved enough to challenge Elon Musk in building the next generation Green technology. <br> To save Earth, it is vital that Damien catches the Bang Balloon to Austin, Texas, United States...
 
+# Table of Contents
+
+1. [ Canvas ](#canvas)
+2. [ Classes ](#classescreation)
+
+
 <a name="canvas"></a>
-## 2. Canvas Creation
-Create a 2D canvas which will act as your blank space to draw your game "items" on. First define the canvas's properties such as width and height. 
+## 1. Canvas Creation
+Create a 2D canvas which will act as your blank space to draw your game "items" on. First create a canvas on HTML, and define the canvas's properties such as width and height. 
 ```
 canvas.width = 1024;
 canvas.height = 576;
@@ -22,10 +21,13 @@ canvas.height = 576;
 
 
 <a name="classescreation"></a>
-## 3. Classes Creation
-<p>Classes Creation are used to define the building blocks of the games. Some of these include:</p>
-<li>Player Classes</li>
-<li>Platform Classes</li>
+## 2. Classes Creation
+<p> Create the individual classes of the various items that will be drawn onto the canvas. These classes will define the key properties of the items such as position and velocity.</p> Here are some examples of the classes.
+<li>Player class</li>
+<li>Enemy class</li>
+<li>Platform class</li>
+<li>Background class</li>
+<li>Item class</li>
 
 
 <a name="playercreation"></a>
