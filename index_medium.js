@@ -86,8 +86,8 @@ function restartGameMedium() {
 
   winningItem = [
     new WinningObject({
-      x: 16000,
-      y: 415,
+      x: 12400,
+      y: 395,
       image: winningImage,
     }),
   ];

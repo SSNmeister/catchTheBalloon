@@ -234,8 +234,8 @@ class WinningObject {
       y: y,
     };
     this.image = image;
-    this.width = image.width;
-    this.height = image.height;
+    this.width = 70;
+    this.height = 128;
   }
 
   draw() {
@@ -265,7 +265,7 @@ const platformImage2 = createImage("./img/platform_2.png");
 const platformImage3 = createImage("./img/platform_3.png");
 const backgroundImage = createImage("./img/background_2.png");
 let itemImage = createImage("./img/potion.png");
-const winningImage = createImage("./img/potion.png");
+const winningImage = createImage("./img/princess.png");
 const enemyImage = createImage("./img/mines.png");
 
 //===============================================================
@@ -414,7 +414,7 @@ let enemyFlying = [
 let winningItem = [
   new WinningObject({
     x: 12400,
-    y: 415,
+    y: 395,
     image: winningImage,
   }),
 ];
@@ -512,8 +512,8 @@ function restartGame() {
 
   winningItem = [
     new WinningObject({
-      x: 16000,
-      y: 415,
+      x: 12400,
+      y: 395,
       image: winningImage,
     }),
   ];
