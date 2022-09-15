@@ -634,8 +634,8 @@ function animate() {
       scrollOffset -= player.speed;
     }
   }
-  console.log(item[0].position.y);
-  // console.log(scrollOffset);
+  // console.log(item[0].position.y);
+  console.log(scrollOffset);
   // console.log(gameModeMedium);
 
   //=============== PLATFORM COLLISION DETECTION ================
