@@ -1,126 +1,257 @@
 # Catch The Balloon
 Play the game and catch the Balloon!
-# Table of Contents
 
-1. [ Overview ](#overview)
-2. [ Canvas ](#canvas)
-3. [ Classes ](#classescreation)
-
-
-<a name="overview"></a>
-## 1. Overview
+<h1> Overview </h1>
 This project is a 2D side scrolling game where a player must get to the finishing line, while avoiding obstacles along the way, to complete the game. The player will be able to test their skills by selecting the different difficulty modes the game offers.
 <br> <br> Damien a devoted Kung Fu master is tired of Man-kind and the damages man have done to Mother Earth. <br> After years of farming and mining BTC, Damien has saved enough to challenge Elon Musk in building the next generation Green technology. <br> To save Earth, it is vital that Damien catches the Bang Balloon to Austin, Texas, United States...
 
+# Table of Contents
+
+1. [ Canvas ](#canvas)
+2. [ Global values ](#globalvalues)
+3. [ Classes creation ](#classescreation)
+* [Class and Constructor](#classandconstructor)
+* [Position](#position)
+* [Dimension](#dimension)
+* [Velocity](#velocity)
+* [Player skin selection](#skin)
+* [draw() method](#draw)
+* [update() method](#update)
+4. [ Image creation ](#imagecreation)
+5. [ Implementing the Classes ](#implementingclasses)
+6. [ Restart Game ](#restartgame)
+7. [ Animation ](#animation)
+8. [ Platform Collision Detection](#platformcollision)
+
+
+
 <a name="canvas"></a>
-## 2. Canvas Creation
-Create a 2D canvas which will act as your blank space to draw your game "items" on. First define the canvas's properties such as width and height. 
+## 1. Canvas creation
+Create a 2D canvas which will act as your blank space to draw your game "items" on. First create a canvas on HTML, and define the canvas's properties such as width and height. <br>
+
+Use getContext("2d") function to get access to the canvas tags 2D drawing functions.
+```
+const canvas = document.querySelector("canvas");
+const c = canvas.getContext("2d");
+```
+
+
+Define the size of your canvas by pixels
 ```
 canvas.width = 1024;
 canvas.height = 576;
 ```
 
+<a name="globalvalues"></a>
+## 2. Global values
+<p> Global variables are defined outside the functions to facilitate the subsequent conditions that will be defined in the later stages</p>
+
+```
+let gravity = 0.5; //creating gravity acceleration
+let itemCollection = false;
+
+let gameModeEasy = true;
+let gameModeMedium = false;
+let gameModeHard = false;
+
+let playerImage1 = true;
+let playerImage2 = false;
+let playerImage3 = false;
+```
+
+
 
 <a name="classescreation"></a>
-## 3. Classes Creation
-<p>Classes Creation are used to define the building blocks of the games. Some of these include:</p>
-<li>Player Classes</li>
-<li>Platform Classes</li>
+## 3. Classes creation
+<p> Create the individual classes of the various items that will be drawn onto the canvas. These classes will define the key properties of the items such as position and velocity.</p> Here are some examples of the classes that have been created.<br>
+<li>Player class</li>
+  <ul>
+  <li>constructor()</li>
+  <li>draw()</li>
+  <li>update()</li>
+  </ul>
+<li>Enemy class</li>
+<li>Flying Enemy class</li>
+<li>Platform class</li>
+<li>Background class</li>
+<li>Item class</li>
+<br>
+The properties of each class varies depending on the functionality. The Player class contains the most comprehensive properties and we will use the player class as an example.
 
+<a name="classandconstructor"></a>
+<h2>Class and Constructor</h2> We first create the class and following constructor() method
 
-<a name="playercreation"></a>
-<h3>1. Player Creation</h3>
-<p>The Player is created using the Class keyword followed by the method constructor(). An example of creating the player class is shown here:
-
-
+```
 class Player {
   constructor() {
-    this.speed = 6;                             //player's speed
-    this.speedY = 10;
-    this.position = {                           //player's starting position
-      x: 0,
-      y: 480,
+    this.speed = 6;
+```
+
+<a name="position"></a>
+<h2>Position</h2> Next we define the position which sets the player's starting position
+
+```
+this.position = {
+      x: 100,
+      y: 100,
     };
-    this.width = 66;                            //player's width and height
+```
+
+<a name="dimension"></a>
+<h2>Dimensions</h2> The dimensions of the player's size on the canvas is defined as such
+
+```
+    this.width = 66;
     this.height = 120;
-    this.velocity = {                           //player's velocity
+```
+
+<a name="velocity"></a>
+<h2>Velocity</h2>
+
+```
+   this.velocity = {
       x: 0,
       y: 0,
     };
+```
 
+<a name="skin"></a>
+<h2>Player skin selection</h2> if statements and conditions are used to facilitate the player's image being chosen to draw on the canvas
 
-<p>The player's properties such as velocity, starting position on the canvas, width and height are defined within.</p>
+```
+    if (playerImage1 === true) {
+      this.image = createImage("./img/character1.png");
+    } else if (playerImage2 === true) {
+      this.image = createImage("./img/character2.png");
+    } else if (playerImage3 === true) {
+      this.image = createImage("./img/character3.png");
+    }
+    this.frames = 0;
+  }
+```
 
-<p>The second part of the player class dictates the drawing method that will be used for the player.</p>
+<a name="draw"></a>
+<h2>draw() method</h2> The draw method is used to draw the image onto the canvas. The drawImage() method draws an image, canvas, or video onto the canvas.
 
-
-draw() {
-    //If you define a function called "draw" in your code, then that function will get called repeatedly, about 60 times per second.
+```
+  draw() { 
     c.drawImage(
       this.image,
-      200 * this.frames, //flipping image through a sprite sheet, 200px per frame
+      200 * this.frames,
       0,
-      200, //cropping image from sprite sheet
-      400, //cropping image from sprite sheet
+      200,
+      400,
       this.position.x,
       this.position.y,
       this.width,
       this.height
     );
   }
+```
 
+<a name="update"></a>
+<h2>update() method</h2> The udpdate() method is used to update the player's position on the canvas. <br> An if statement is used to 
+
+```
   update() {
-    //updating player's y position with gravity on the canvas
-    this.draw();
-    // this.frames += 1;
-    // if (this.frames > 19) this.frames = 0;
-    this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+    this.position.x += this.velocity.x;
+    this.draw();
+
     if (this.position.y + this.height + this.velocity.y <= canvas.height) {
-      this.velocity.y += gravity; //acceleration to "gravity"
-    }
+      this.velocity.y += gravity; //acceleration to gravity
+    } 
   }
-  
+```
 
-<a name="platformcreation"></a>
-<h3>2. Platform Creation</h3>
+<a name="imagecreation"></a>
+## 4. Image creation
+<p> As multiple images will be used in this project, defining a function to create the image will be useful</p>
 
-<p>The Platform is created using the Class keyword followed by the method constructor(). An example of creating the platform class is shown here:
-
-
-class Platform {
-  //platform's properties
-  constructor({ x, y, image }) {
-    //platform's starting position (object)
-    this.position = {
-      x: x,
-      y: y,
-    };
-
-    this.image = image;
-
-    this.width = image.width;
-    this.height = image.height;
-  }
-  draw() {
-    c.drawImage(this.image, this.position.x, this.position.y);
-  }
+```
+function createImage(imageSrc) {
+  const image = new Image();
+  image.src = imageSrc;
+  return image;
+  // console.log(image);
 }
+```
 
 
-<p>The platform's properties such as starting position on the canvas, width and height and "image to use" are defined within.</p>
+<p>Variable assign the image creation for each item. For example:</p>
 
-<a name="movingplatformcreation"></a>
-<h3>3. Moving Platform Creation</h3>
+```
+const platformImage3 = createImage("./img/platform_3.png");
+const backgroundImage = createImage("./img/background_2.png");
+```
 
-sometext
 
-<a name="bouldercreation"></a>
-<h3>4. Boulder Creation</h3>
+<a name="implementingclasses"></a>
+## 5. Implementing the Classes
+<p> Once the classes have been defined, we can implement each class by assigning variables to an array containing the object key-values pairs </p>
 
-sometext
+```
+let player = new Player();
 
-<a name="backgroundcreation"></a>
-<h3>5. Background Creation</h3>
+let platforms = [
+  new Platform({ x: -50, y: 560, image: platformImage }),
+  new Platform({ x: platformImage.width - 60, y: 560, image: platformImage }),
+  ];
+  
+let enemy = [new EnemyObjects({ x: -3000, y: 370, image: enemyImage })];
+```
 
-sometext
+<p> The same implementation approach described above can be used to populate the Classes and have them drawn onto the canvas </p>
+
+
+<a name="restartgame"></a>
+## 6. Restart game 
+<p> The restart game functions are essential to this game and will be called in multiple scenarios such as when a player dies, selects a new difficulty mode, a new skin or completes the game.</p><br>
+<p> The restart game functions will also be used to reset certain values such as the positions of the items on the canvas and assigning new values to the global values to meet certain conditions</p><br>
+<p>Here is an example of the restart game function</p>
+
+```
+function restartGame() {
+player = new Player();
+
+itemCollection = false;
+
+platforms = [
+    new Platform({ x: -50, y: 560, image: platformImage }),
+    new Platform({ x: platformImage.width - 60, y: 560, image: platformImage })
+    ];
+
+  scrollOffset = 0;
+  player.position.x = 100;
+  keys.right.pressed = false;
+  // keys.up.pressed = false;
+  keys.left.pressed = false;
+  }
+  ```
+  
+  
+<a name="animation"></a>
+## 7. Animation
+
+
+<a name="platformcollision"></a>
+## 8. Platform Collision Detection
+<p>Platform Collision Detection is used to create the illusion of the character landing and moving on the platforms. Other collision detection such as enemy collection detection, and item collection detection also share the same fundamentals.</p> <br>
+<p> Basically, this detection system makes use of the if statement and conditions, and any y position above or equal to the platform, player y velocity = 0 </p>
+
+```
+platforms.forEach((platform) => {
+    if (
+      player.position.y + player.height <= platform.position.y && 
+      player.position.y + player.height + player.velocity.y >= 
+        platform.position.y &&
+      player.position.x + player.width >= platform.position.x &&
+      player.position.x <= platform.position.x + platform.width
+    ) {
+      player.velocity.y = 0;
+    }
+  });
+```
+
+
+
