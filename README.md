@@ -22,6 +22,8 @@ This project is a 2D side scrolling game where a player must get to the finishin
 6. [ Restart Game ](#restartgame)
 7. [ Animation ](#animation)
 8. [ Platform Collision Detection](#platformcollision)
+9. [ Win condition ](#wincondition)
+10. [Lose condition ](#losecondition)
 
 
 
@@ -252,6 +254,58 @@ platforms.forEach((platform) => {
     }
   });
 ```
+
+
+<a name="wincondition"></a>
+## 9. Win condition
+<p> To ensure a player wins, certain conditions must be met. We can define them using if statements as such: </p>
+
+```
+  if (scrollOffset > 12000 && gameModeEasy === true) {
+    window.confirm("You successfully took the balloon!");
+    restartGameMedium();
+    scrollOffset = 0;
+    // console.log("You win.");
+  } else if (scrollOffset > 12000 && gameModeMedium === true) {
+    window.confirm("You successfully took the balloon!");
+    restartGameHard();
+    scrollOffset = 0;
+  } else if (scrollOffset > 12000 && gameModeHard === true) {
+    window.confirm("You successfully took the balloon!");
+    restartGameHard();
+    scrollOffset = 0;
+  }
+```
+
+<a name="losecondition"></a>
+## 10. Lose condition
+<p> To ensure a player loses, certain conditions must be met. We can define them using if statements as such: </p>
+
+```
+  if (
+    player.position.y + player.height * 0.3 > canvas.height &&
+    gameModeEasy === true
+  ) {
+    notification.innerHTML = "You Died!";
+    document.querySelector("#notification").style.backgroundColor = "red";
+    restartGame();
+  } else if (
+    player.position.y + player.height * 0.3 > canvas.height &&
+    gameModeMedium === true
+  ) {
+    notification.innerHTML = "You Died!";
+    document.querySelector("#notification").style.backgroundColor = "red";
+    restartGameMedium();
+  } else if (
+    player.position.y + player.height * 0.3 > canvas.height &&
+    gameModeHard === true
+  ) {
+    notification.innerHTML = "You Died!";
+    document.querySelector("#notification").style.backgroundColor = "red";
+    restartGameHard();
+  }
+```
+
 
 
 
