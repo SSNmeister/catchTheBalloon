@@ -669,6 +669,8 @@ function animate() {
       item.position.x + item.width + 3500
     ) {
       gravity = 0.5;
+      notification.innerHTML = "Your potion has ran out!";
+      notification.style.backgroundColor = "darkgoldenrod";
     }
   });
 
@@ -787,6 +789,7 @@ startButton.addEventListener("click", startGame);
 
 function startGame() {
   animate();
+  restartGame();
 }
 
 function toggleScreen(id, toggle) {
