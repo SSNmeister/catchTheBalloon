@@ -1,5 +1,5 @@
 const canvas = document.querySelector("canvas");
-const c = canvas.getContext("2d");
+const c = canvas.getContext("2d"); //use getContext("2d") function to get access to the canvas tags 2D drawing functions.
 
 // const platform = document.getElementById("platform").innerHTML;
 // console.log(platform);
@@ -583,7 +583,7 @@ function animate() {
   if (keys.right.pressed && player.position.x < 400) {
     player.velocity.x = player.speed;
   } else if (
-    (keys.left.pressed && player.position.x > 100) ||
+    (keys.left.pressed && player.position.x > 200) ||
     (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)
   ) {
     player.velocity.x = -player.speed;
