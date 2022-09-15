@@ -21,9 +21,11 @@ This project is a 2D side scrolling game where a player must get to the finishin
 5. [ Implementing the Classes ](#implementingclasses)
 6. [ Restart Game ](#restartgame)
 7. [ Animation ](#animation)
-8. [ Platform Collision Detection](#platformcollision)
-9. [ Win condition ](#wincondition)
-10. [Lose condition ](#losecondition)
+8. [ Enemy Collision Detection](#enemycollision)
+9. [ Platform Collision Detection](#platformcollision)
+10. [ Win condition ](#wincondition)
+11. [Lose condition ](#losecondition)
+12. [Event listener ](#eventlistener)
 
 
 
@@ -234,11 +236,74 @@ platforms = [
   
 <a name="animation"></a>
 ## 7. Animation
+<p>An animate function is used to perform and execute various actions such as calling the individual classes and their draw functions for the array. Conditional statements are used to control the animation, such as velocity and position of objects.</p>
+
+<p>An example of the animate function is shown below:</p>
+
+```
+function animate() {
+  toggleScreen("startScreen", false);
+  toggleScreen("canvas", true);
+  
+  enemyFlying.forEach((movingEnemy) => {
+    if (movingEnemy.movement === false && movingEnemy.position.y > 0) {
+      movingEnemy.velocity.y = 4;
+      movingEnemy.movement = true;
+    } else if (movingEnemy.movement === true && movingEnemy.position.y >= 510) {
+      movingEnemy.velocity.y = -4;
+    } else if (movingEnemy.position.y <= 0) {
+      movingEnemy.velocity.y = 4;
+      movingEnemy.movement = false;
+    }
+  });
+  
+   platforms.forEach((platform) => {
+    platform.draw();
+  });
+  
+    enemy.forEach((item) => {
+    item.draw();
+  });
+  
+   player.update();
+```
+
+
+
+<a name="enemycollision"></a>
+## 8. Enemy Collision Detection
+<p>Enemy Collision Detection is used to detect if the player physically contacts an enemy, which will result in the player dying. Other collision detection such as platform collision detection, and item collection detection also share the same fundamentals.</p><br>
+
+```
+enemy.forEach((enemyObject) => {
+    if (
+      player.position.x + player.width >= enemyObject.position.x &&
+      player.position.x <= enemyObject.position.x + enemyObject.width &&
+      player.position.y + player.height >= enemyObject.position.y &&
+      player.position.y <= enemyObject.position.y + enemyObject.height &&
+      gameModeMedium === true
+    ) {
+      notification.innerHTML = "You Died!";
+      document.querySelector("#notification").style.backgroundColor = "red";
+      restartGameMedium();
+    } else if (
+      player.position.x + player.width >= enemyObject.position.x &&
+      player.position.x <= enemyObject.position.x + enemyObject.width &&
+      player.position.y + player.height >= enemyObject.position.y &&
+      player.position.y <= enemyObject.position.y + enemyObject.height &&
+      gameModeHard === true
+    ) {
+      notification.innerHTML = "You Died!";
+      document.querySelector("#notification").style.backgroundColor = "red";
+      restartGameHard();
+    }
+  });
+  ```
 
 
 <a name="platformcollision"></a>
-## 8. Platform Collision Detection
-<p>Platform Collision Detection is used to create the illusion of the character landing and moving on the platforms. Other collision detection such as enemy collection detection, and item collection detection also share the same fundamentals.</p> <br>
+## 9. Platform Collision Detection
+<p>Platform Collision Detection is used to create the illusion of the character landing and moving on the platforms. </p> <br>
 <p> Basically, this detection system makes use of the if statement and conditions, and any y position above or equal to the platform, player y velocity = 0 </p>
 
 ```
@@ -257,7 +322,7 @@ platforms.forEach((platform) => {
 
 
 <a name="wincondition"></a>
-## 9. Win condition
+## 10. Win condition
 <p> To ensure a player wins, certain conditions must be met. We can define them using if statements as such: </p>
 
 ```
@@ -278,7 +343,7 @@ platforms.forEach((platform) => {
 ```
 
 <a name="losecondition"></a>
-## 10. Lose condition
+## 11. Lose condition
 <p> To ensure a player loses, certain conditions must be met. We can define them using if statements as such: </p>
 
 ```
@@ -306,6 +371,59 @@ platforms.forEach((platform) => {
   }
 ```
 
+<a name="eventlistener"></a>
+## 12. Event listener
+<p> Event listeners are used to listen for user's inputs, the keys pressed will determine how the player interacts and moves. </p>
+
+```
+addEventListener("keydown", ({ keyCode }) => {
+  switch (keyCode) {
+    case 65:
+      console.log("left");
+      keys.left.pressed = true;
+      break;
+
+    case 83:
+      console.log("down");
+      break;
+
+    case 68:
+      console.log("right");
+      keys.right.pressed = true;
+      break;
+
+    case 87:
+      console.log("up");
+      if (player.velocity.y === 0) {
+        player.velocity.y -= 12;
+        break;
+      }
+  }
+});
+
+addEventListener("keyup", ({ keyCode }) => {
+  // console.log(keyCode);
+  switch (keyCode) {
+    case 65:
+      console.log("left");
+      keys.left.pressed = false;
+      break;
+
+    case 83:
+      console.log("down");
+      break;
+
+    case 68:
+      console.log("right");
+      keys.right.pressed = false;
+      break;
+
+    case 87:
+      console.log("up");
+      player.velocity.y -= 0;
+      break;
+  }
+});
 
 
-
+```
