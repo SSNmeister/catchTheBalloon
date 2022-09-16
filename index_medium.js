@@ -7,6 +7,8 @@ function restartGameMedium() {
   easyButton.style.backgroundColor = "darkgoldenrod";
   mediumButton.innerHTML = "Oooh~";
   mediumButton.style.backgroundColor = "white";
+  hardButton.innerHTML = "Hard";
+  hardButton.style.backgroundColor = "darkgoldenrod";
   gameModeEasy = false;
   gameModeMedium = true;
   gameModeHard = false;

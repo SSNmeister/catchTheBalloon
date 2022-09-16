@@ -51,6 +51,7 @@ class Player {
   draw() {
     //If you define a function called "draw" in your code, then that function will get called repeatedly, about 60 times per second.
     c.drawImage(
+      //context.drawImage(img,x,y);
       this.image,
       200 * this.frames,
       0,
@@ -448,6 +449,10 @@ function restartGame() {
 
   gravity = 0.5;
   player = new Player();
+
+  gameModeEasy = true;
+  gameModeMedium = false;
+  gameModeHard = false;
 
   itemCollection = false;
 
