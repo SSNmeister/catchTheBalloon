@@ -32,9 +32,9 @@ mediumButton.addEventListener("click", restartGameMedium);
 hardButton.addEventListener("click", restartGameHard);
 
 //=============== Event listener for GAME MODES ================
-easyButton.addEventListener("click", restartGame);
-mediumButton.addEventListener("click", restartGameMedium);
-hardButton.addEventListener("click", restartGameHard);
+// easyButton.addEventListener("click", restartGame);
+// mediumButton.addEventListener("click", restartGameMedium);
+// hardButton.addEventListener("click", restartGameHard);
 
 //===============================================================
 //====================== OVERLAY button =========================

@@ -508,6 +508,12 @@ function restartGame() {
     }),
   ];
 
+  enemy = [new EnemyObjects({ x: -3000, y: 370, image: enemyImage })];
+
+  enemyFlying = [
+    new EnemyFlyingObjects({ x: -3000, y: 370, image: enemyImage }),
+  ];
+
   item = [new ItemObjects({ x: 4600, y: 500, image: itemImage })];
 
   winningItem = [

@@ -84,6 +84,10 @@ function restartGameMedium() {
     new EnemyObjects({ x: 9150, y: 470, image: enemyImage }),
   ];
 
+  enemyFlying = [
+    new EnemyFlyingObjects({ x: -3000, y: 370, image: enemyImage }),
+  ];
+
   winningItem = [
     new WinningObject({
       x: 12400,
